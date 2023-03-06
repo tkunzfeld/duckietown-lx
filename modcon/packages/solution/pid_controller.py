@@ -28,10 +28,15 @@ def PIDController(
     """
 
     # TODO: these are random values, you have to implement your own PID controller in here
-    omega = np.random.uniform(-8.0, 8.0)
-    e = np.random.random()
-    e_int = np.random.random()
+    p = 10
+    d = 0.5
+    i = 1
+
+    e = theta_ref - theta_hat
+    e_der = (e - prev_e) / delta_t
+    e_int = prev_int + e * delta_t
+    omega = p * e + d * e_der + i * e_int
     # Hint: print for debugging
-    # print(f"\n\nDelta time : {delta_t} \nE : {np.rad2deg(e)} \nE int : {e_int} \nPrev e : {prev_e} \nU : {u} \nTheta hat: {np.rad2deg(theta_hat)} \n")
+    print(f"\n\nDelta time : {delta_t} \nE : {np.rad2deg(e)} \nE int : {e_int} \nPrev e : {prev_e} \nTheta hat: {np.rad2deg(theta_hat)} \n")
     # ---
     return v_0, omega, e, e_int
